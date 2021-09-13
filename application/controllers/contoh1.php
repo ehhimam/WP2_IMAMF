@@ -12,3 +12,5 @@ class contoh1 extends CI_Controller
 
 
 ?>
+
+
