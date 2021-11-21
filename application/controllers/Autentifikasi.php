@@ -44,18 +44,15 @@ class Autentifikasi extends CI_Controller
                     $this->session->set_userdata($data);
                     redirect('admin');
                 } else {
-                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" 
-role="alert">Password salah!!</div>');
+                    $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Password salah!!</div>');
                     redirect('autentifikasi');
                 }
             } else {
-                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">User 
-belum diaktifasi!!</div>');
+                $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">User belum diaktifasi!!</div>');
                 redirect('autentifikasi');
             }
         } else {
-            $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Email tidak 
-terdaftar!!</div>');
+            $this->session->set_flashdata('pesan', '<div class="alert alert-danger alert-message" role="alert">Email tidak terdaftar!!</div>');
             redirect('autentifikasi');
         }
     }
@@ -131,19 +128,21 @@ terdaftar!!</div>');
             $this->load->view('templates/aute_header', $data);
             $this->load->view('autentifikasi/registrasi');
             $this->load->view('templates/aute_footer');
-        } else $email = $this->input->post('email', true);
-        $data = [
-            'nama' => htmlspecialchars($this->input->post('nama', true)),
-            'email' => htmlspecialchars($email),
-            'image' => 'default.jpg',
-            'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
-            'role_id' => 2,
-            'is_active' => 0,
-            'tanggal_input' => time()
-        ];
-        $this->ModelUser->simpanData($data); //menggunakan model
+        } else {
+            $email = $this->input->post('email', true);
+            $data = [
+                'nama' => htmlspecialchars($this->input->post('nama', true)),
+                'email' => htmlspecialchars($email),
+                'image' => 'default.jpg',
+                'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
+                'role_id' => 2,
+                'is_active' => 0,
+                'tanggal_input' => time()
+            ];
+            $this->ModelUser->simpanData($data); //menggunakan model
 
-        $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Selamat!! akun member anda sudah dibuat. Silahkan Aktivasi Akun anda</div>');
-        redirect('autentifikasi');
+            $this->session->set_flashdata('pesan', '<div class="alert alert-success alert-message" role="alert">Selamat!! akun member anda sudah dibuat. Silahkan Aktivasi Akun anda</div>');
+            redirect('autentifikasi');
+        }
     }
 }
